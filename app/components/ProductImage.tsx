@@ -20,7 +20,6 @@ export function ProductImage({
   image: ProductImageProps[];
   name: string;
 }) {
-  const { setQty } = useStateContext();
   const [index, setIndex] = useState(0);
 
   useEffect(() => {
