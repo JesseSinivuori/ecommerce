@@ -2,7 +2,6 @@
 import Image from "next/image";
 import { urlFor } from "../lib/sanityClient";
 import { useEffect, useState } from "react";
-import { useStateContext } from "../providers/StateContext";
 
 export interface ProductImageProps {
   _type: string;
