@@ -5,13 +5,11 @@ import { useEffect, useState } from "react";
 import { useStateContext } from "../providers/StateContext";
 
 export interface ProductImageProps {
-  image: {
+  _type: string;
+  _key: string;
+  asset: {
+    _ref: string;
     _type: string;
-    _key: string;
-    asset: {
-      _ref: string;
-      _type: string;
-    };
   };
 }
 
@@ -22,13 +20,12 @@ export function ProductImage({
   image: ProductImageProps[];
   name: string;
 }) {
-  const { setQty }: any = useStateContext();
+  const { setQty } = useStateContext();
   const [index, setIndex] = useState(0);
 
   useEffect(() => {
-    setQty(1);
     setIndex(0);
-  }, [setQty]);
+  }, []);
 
   return (
     <div>
@@ -36,23 +33,23 @@ export function ProductImage({
         <Image
           src={urlFor(image[index])}
           className="product-detail-image"
-          alt={`Image of ' ${name}`}
+          alt={`Image of '${name}`}
           height={400}
           width={400}
         />
       </div>
       {image?.length > 1 && (
         <div className="small-images-container">
-          {image?.map((item: any, i: number) => (
+          {image?.map((item: ProductImageProps, i: number) => (
             <Image
               width={200}
               height={200}
-              key={item._id}
+              key={item._key}
               src={urlFor(item)}
               className={
                 i === index ? "small-image selected-image" : "small-image"
               }
-              alt={`Image of ' ${name}`}
+              alt={`Image of '${name}`}
               onMouseEnter={() => setIndex(i)}
             />
           ))}

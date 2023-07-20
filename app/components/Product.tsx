@@ -15,6 +15,7 @@ export interface ProductProps {
   slug: { current: string; _type: string };
   price: number;
   _createdAt: string;
+  quantity: number;
 }
 
 export function Product({ product }: { product: ProductProps }) {

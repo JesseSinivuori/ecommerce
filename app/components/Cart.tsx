@@ -70,9 +70,9 @@ export default function Cart() {
         <div
           id="cart"
           data-testid="cart"
-          className={`cart-wrapper h-screen w-full max-w-[680px] overflow-hidden
-          overscroll-none bg-nav transition-all duration-500 
-          ${!showCart ? "translate-x-full" : "translate-x-0"}`}
+          className={`cart-wrapper h-screen w-full max-w-[680px]
+          overflow-hidden overscroll-none bg-nav transition-all duration-500
+          ${showCart ? "translate-x-0" : "translate-x-full"}`}
         >
           <div className={`cart-container h-[100svh] rounded-md`}>
             <button
@@ -87,7 +87,7 @@ export default function Cart() {
               <span className="heading">Items</span>
               <span className="cart-num-items">{totalQuantities}</span>
             </button>
-            {cartItems.length < 1 && (
+            {!cartItems.length && (
               <div className="empty-cart">
                 <AiOutlineShopping size={150} />
                 <h3>{`It's empty... 👀`}</h3>

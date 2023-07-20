@@ -1,8 +1,16 @@
 "use client";
 import React, { useState, useContext, createContext, useEffect } from "react";
 import { toast } from "react-hot-toast";
+import { ProductProps } from "../components";
 
 const Context = createContext<any>(null);
+
+export interface CartItemProps {
+  category: string;
+  price: number;
+  quantity: number;
+  _id: string;
+}
 
 export default function StateContext({
   children,
@@ -10,21 +18,23 @@ export default function StateContext({
   children: React.ReactNode;
 }) {
   const [showCart, setShowCart] = useState(false);
-  const [cartItems, setCartItems] = useState<any[]>([]);
+  const [cartItems, setCartItems] = useState<CartItemProps[]>([]);
   const [totalPrice, setTotalPrice] = useState(0);
   const [totalQuantities, setTotalQuantities] = useState(0);
   const [qty, setQty] = useState(1);
   const [category, setCategory] = useState("All");
-  const [useCategoryFilter, setUseCategoryFilter] = useState(false);
 
   useEffect(() => {
     getLocalStorage(setCartItems, setTotalPrice, setTotalQuantities);
   }, []);
 
-  let foundProduct: { quantity: number; price: number };
+  const findCartItemById = (id: string) => {
+    const foundProduct = cartItems.find((item) => item._id === id);
+    return foundProduct;
+  };
 
-  const onAdd = (product: any, quantity: number) => {
-    const productIsInCart = cartItems.find((item) => item._id === product._id);
+  const onAdd = (product: ProductProps, quantity: number) => {
+    const productIsInCart = findCartItemById(product._id);
 
     const updatedTotalPrice = totalPrice + product.price * quantity;
     setTotalPrice(updatedTotalPrice);
@@ -34,31 +44,40 @@ export default function StateContext({
 
     if (productIsInCart) {
       const updatedCartItems = cartItems.map((cartProduct) => {
-        if (cartProduct._id === product._id) {
-          const updatedItem = {
-            ...cartProduct,
-            quantity: cartProduct.quantity + quantity,
-          };
-          return updatedItem;
-        } else {
-          return cartProduct;
-        }
+        const updatedProduct = {
+          ...cartProduct,
+          quantity: cartProduct.quantity + quantity,
+        };
+        return cartProduct._id === product._id ? updatedProduct : cartProduct;
       });
-
+      setLocalStorage(
+        updatedCartItems,
+        updatedTotalPrice,
+        updatedTotalQuantities
+      );
       setCartItems(updatedCartItems);
     } else {
       product.quantity = quantity;
-
-      setCartItems([...cartItems, { ...product }]);
+      const updatedCartItems = [...cartItems, { ...product }];
+      setLocalStorage(
+        updatedCartItems,
+        updatedTotalPrice,
+        updatedTotalQuantities
+      );
+      setCartItems(updatedCartItems);
     }
-
-    setLocalStorage(cartItems, updatedTotalPrice, updatedTotalQuantities);
 
     toast.success(`${qty} ${product.name} added to the cart.`);
   };
 
-  const onRemove = (product: { _id: any }) => {
-    foundProduct = cartItems.find((item) => item._id === product._id);
+  const onRemove = (product: ProductProps) => {
+    const foundProduct = findCartItemById(product._id);
+    if (!foundProduct) {
+      console.error("Product was not found.");
+      toast.error("Product was not found.");
+      return;
+    }
+
     const updatedCartItems = cartItems.filter(
       (item) => item._id !== product._id
     );
@@ -79,7 +98,12 @@ export default function StateContext({
   };
 
   const toggleCartItemQuantity = (id: string, value: "inc" | "dec") => {
-    foundProduct = cartItems.find((item) => item._id === id);
+    const foundProduct = findCartItemById(id);
+    if (!foundProduct) {
+      console.error("Product was not found.");
+      toast.error("Product was not found.");
+      return;
+    }
 
     if (value === "inc") {
       const updatedCartItems = cartItems.map((item) => {
@@ -160,8 +184,6 @@ export default function StateContext({
         setTotalQuantities,
         category,
         setCategory,
-        useCategoryFilter,
-        setUseCategoryFilter,
       }}
     >
       {children}

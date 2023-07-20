@@ -8,7 +8,7 @@ import { Toaster } from "react-hot-toast";
 const poppins = Poppins({
   weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
   subsets: ["latin"],
-  display: "swap",
+  display: "block",
 });
 
 export const metadata: Metadata = {
@@ -27,7 +27,7 @@ export default function RootLayout({
         className={`${poppins.className} m-auto flex w-full max-w-[1400px] flex-col justify-center overflow-hidden overflow-y-auto px-2 pt-24 xss:px-4`}
       >
         <StateContext>
-          <div className="fixed left-0 right-0 top-0 z-[9999] ">
+          <div className="fixed left-0 right-0 top-0 z-[9999]">
             <Navbar />
             <Toaster
               containerClassName={`mt-16 lg:mt-0 z-[9999]`}

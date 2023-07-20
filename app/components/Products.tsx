@@ -3,11 +3,12 @@ import { useStateContext } from "../providers/StateContext";
 import { Product, ProductProps } from "./index";
 
 export default function Products({ products }: { products: ProductProps[] }) {
-  const { category, useCategoryFilter } = useStateContext();
+  const { category } = useStateContext();
 
-  const filteredProducts = useCategoryFilter
-    ? products.filter((product) => product.category === category)
-    : products;
+  const filteredProducts =
+    category !== "All"
+      ? products.filter((product) => product.category === category)
+      : products;
 
   return (
     <div className={`products-container`}>
