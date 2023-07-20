@@ -184,7 +184,6 @@ span.text-red {
 .hero-banner-container button {
   border-radius: 15px;
   padding: 10px 10px;
-  background-color: #f02d34;
   color: white;
   border: none;
   margin: 40px;
@@ -194,9 +193,8 @@ span.text-red {
   position: relative;
   z-index: 1;
   border: 1px solid;
-  border-color: #f02d34;
-  @apply transition-all duration-300 hover:bg-transparent
-  hover:text-[#f02d34];
+  @apply border-red-900 bg-red-900 transition-all
+  duration-300 hover:bg-transparent hover:text-red-900;
 }
 
 .hero-banner-container h3 {

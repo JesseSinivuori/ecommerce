@@ -1,5 +1,4 @@
 "use client";
-import { useEffect } from "react";
 import { useStateContext } from "../providers/StateContext";
 
 export default function BuyButtons({ product }: { product: any }) {

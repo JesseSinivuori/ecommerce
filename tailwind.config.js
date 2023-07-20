@@ -9,8 +9,8 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        primary: "#131313",
-        nav: "#191919",
+        primary: "#060606",
+        nav: "#111111",
       },
     },
     screens: {
