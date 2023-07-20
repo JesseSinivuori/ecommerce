@@ -20,7 +20,6 @@ export const generateStaticParams = async () => {
   const paths = products.map((product: any) => ({
     slug: product.slug.current,
   }));
-
   return paths;
 };
 
@@ -69,11 +68,11 @@ export default async function ProductDetails({
             <p></p>
           </div>
           <h4></h4>
-          <p className="">{details}</p>
+          <p>{details}</p>
           <p className="price">{price}€</p>
           <div className="quantity flex-wrap justify-center xss:flex xss:justify-start">
             <div className="justify-start">
-              <h3 className="">Quantity: </h3>
+              <h3>Quantity: </h3>
             </div>
             <QuantityButtons />
           </div>

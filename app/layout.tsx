@@ -24,7 +24,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${poppins.className} m-auto mt-[60px] flex w-full max-w-[1400px] flex-col justify-center overflow-hidden overflow-y-auto ss:mt-[74px]`}
+        className={`${poppins.className} m-auto flex w-full max-w-[1400px] flex-col justify-center overflow-hidden overflow-y-auto px-2 pt-24 xss:px-4`}
       >
         <StateContext>
           <div className="fixed left-0 right-0 top-0 z-[9999] ">
@@ -35,7 +35,7 @@ export default function RootLayout({
                 style: {
                   padding: "16px",
                   color: "white",
-                  backgroundColor: "#0a0a0a",
+                  backgroundColor: "var(--color-nav)",
                 },
               }}
             />
