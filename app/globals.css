@@ -21,14 +21,6 @@ html {
   @apply bg-primary;
 }
 
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #888;
-}
-
 .contact-page {
   padding: 0;
   margin: 0;
@@ -49,58 +41,6 @@ a {
   z-index: 9999;
 }
 
-.marquee-text {
-  font-size: 29px;
-  font-weight: 600;
-  margin: 60px 0px;
-  color: #f02d34;
-}
-
-.marquee {
-  position: relative;
-  height: 450px;
-  width: 100%;
-  overflow: hidden;
-}
-
-.track {
-  position: absolute;
-  white-space: nowrap;
-  will-change: transform;
-  animation: marquee 45s linear infinite;
-  width: 100%;
-}
-
-.track:hover {
-  animation-play-state: paused;
-}
-
-@keyframes marquee {
-  0% {
-    transform: translateX(50%);
-  }
-
-  50% {
-    transform: translateX(-100%);
-  }
-
-  100% {
-    transform: translateX(50%);
-  }
-}
-
-span.text-red {
-  -webkit-text-stroke: 1px #f02d34;
-  margin-left: 6px;
-}
-
-.logo {
-  right: 160px;
-  margin: 16px 16px;
-  color: gray;
-  font-size: 18px;
-}
-
 .cart-icon {
   font-size: 25px;
   color: white;
@@ -116,12 +56,12 @@ span.text-red {
   bottom: 12px;
   font-size: 12px;
   color: #eee;
-  background-color: #f02d34;
   width: 18px;
   height: 18px;
   border-radius: 50%;
   text-align: center;
   font-weight: 600;
+  @apply bg-red-600;
 }
 
 .products-container {
@@ -194,7 +134,7 @@ span.text-red {
   z-index: 1;
   border: 1px solid;
   @apply border-red-900 bg-red-900 transition-all
-  duration-300 hover:bg-transparent hover:text-red-900;
+  duration-300 hover:border-red-600 hover:bg-transparent hover:text-red-600;
 }
 
 .hero-banner-container h3 {
@@ -290,71 +230,6 @@ span.text-red {
   font-weight: 200;
 }
 
-.footer-banner-container {
-  padding: 100px 40px;
-  background-color: #f02d34;
-  border-radius: 15px;
-  position: relative;
-  height: 400px;
-  line-height: 1;
-  color: white;
-  width: 100%;
-  margin-top: 120px;
-}
-
-.banner-desc {
-  display: flex;
-}
-
-.banner-desc button {
-  border-radius: 15px;
-  padding: 10px 16px;
-  background-color: white;
-  color: red;
-  border: none;
-  margin-top: 40px;
-  font-size: 18px;
-  font-weight: 500;
-  cursor: pointer;
-}
-
-.banner-desc .left h3 {
-  font-weight: 900;
-  font-size: 80px;
-  margin-left: 25px;
-}
-
-.banner-desc .left p {
-  margin: 18px;
-}
-
-.footer-banner-image {
-  position: absolute;
-  /* top: -35%;
-  left: 8%; */
-  top: -25%;
-  left: 25%;
-  object-fit: contain;
-}
-
-.banner-desc .right {
-  line-height: 1.4;
-}
-
-.banner-desc .right h3 {
-  font-weight: 800;
-  font-size: 60px;
-}
-
-.banner-desc .right p {
-  font-size: 18px;
-}
-
-.banner-desc .right .company-desc {
-  font-size: 14px;
-  font-weight: 300;
-}
-
 .cart-wrapper {
   z-index: 9999;
   right: 0;
@@ -368,25 +243,6 @@ span.text-red {
   padding: 40px 10px;
   position: relative;
   overflow: hidden;
-}
-
-.footer-container {
-  color: white;
-  text-align: center;
-  margin-top: 20px;
-  padding: 30px 10px;
-  font-weight: 700;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-  justify-content: center;
-}
-
-.footer-container .icons {
-  font-size: 30px;
-  display: flex;
-  gap: 10px;
 }
 
 .cart-heading {
@@ -406,7 +262,7 @@ span.text-red {
 
 .cart-num-items {
   margin-left: 10px;
-  color: #f02d34;
+  @apply text-red-600;
 }
 
 .empty-cart {
@@ -465,24 +321,11 @@ span.text-red {
   display: flex;
   justify-content: space-between;
   padding: 20px 25px 20px 25px;
-  border-bottom: 1px solid #f02d34;
+  @apply border-b border-b-red-900;
 }
 
 .total h3 {
   font-size: 22px;
-}
-
-.remove-item {
-  color: #f02d34;
-  cursor: pointer;
-  border-radius: 50%;
-  font-size: 20px;
-  padding: 10px;
-  @apply rotate-45 transition-all duration-500
-  hover:rotate-[225deg] hover:scale-110
-  hover:animate-pulse hover:bg-[#ff0000] hover:text-primary;
-  border: none;
-  z-index: 1;
 }
 
 .cart-bottom {
@@ -507,17 +350,11 @@ span.text-red {
   font-size: 20px;
   margin-top: 40px;
   text-transform: uppercase;
-  background-color: #f02d34;
   color: #fff;
   cursor: pointer;
   transform: scale(1, 1);
   transition: all 0.3s ease-in-out;
-}
-
-.btn:hover {
-  background-color: transparent;
-  border-color: #f02d34;
-  border: 1px solid #f02d34;
+  @apply bg-red-900 hover:border-red-600 hover:bg-transparent;
 }
 
 .product-detail-container {
@@ -553,10 +390,6 @@ span.text-red {
   cursor: pointer;
 }
 
-.selected-image {
-  background-color: #f02d34;
-}
-
 .reviews {
   margin-top: 10px;
   display: flex;
@@ -565,9 +398,9 @@ span.text-red {
 }
 
 .stars {
-  color: #f02d34;
   display: flex;
   align-items: center;
+  @apply text-red-900;
 }
 
 .product-detail-desc h4 {
@@ -588,7 +421,7 @@ span.text-red {
   font-weight: 700;
   font-size: 26px;
   margin-top: 30px;
-  color: #f02d34;
+  @apply text-red-600;
 }
 
 .price .old-price,
@@ -613,14 +446,13 @@ span.text-red {
 .buttons .add-to-cart {
   width: 200px;
   padding: 10px 20px;
-  border: 1px solid #f02d34;
   border-radius: 6px;
   font-size: 18px;
   font-weight: 500;
-  color: #f02d34;
   cursor: pointer;
   transform: scale(1, 1);
   transition: transform 0.1s ease;
+  @apply border border-red-900 text-white;
 }
 
 .buttons .add-to-cart:hover {
@@ -630,7 +462,6 @@ span.text-red {
 .buttons .buy-now {
   width: 200px;
   padding: 10px 20px;
-  background-color: #f02d34;
   border-radius: 6px;
   color: white;
   border: none;
@@ -639,6 +470,7 @@ span.text-red {
   cursor: pointer;
   transform: scale(1, 1);
   transition: transform 0.1s ease;
+  @apply bg-red-900;
 }
 
 .buttons .buy-now:hover {
@@ -659,12 +491,11 @@ span.text-red {
 .quantity-desc .minus {
   border-radius: 50%;
   padding: 10px;
-  color: #f02d34;
   cursor: pointer;
   display: flex;
   justify-content: center;
-  @apply bg-transparent transition-all duration-100
-  hover:scale-110 hover:bg-[#f02d34]
+  @apply bg-transparent text-red-600 transition-all
+  duration-100 hover:scale-110 hover:bg-red-600
   hover:text-primary active:scale-125;
 }
 
@@ -678,11 +509,10 @@ span.text-red {
 
 .quantity-desc .plus {
   padding: 10px;
-  color: #15ff00;
   cursor: pointer;
   border-radius: 50%;
-  @apply bg-transparent transition-all duration-100
-  hover:scale-110 hover:bg-[#15ff00]
+  @apply bg-transparent text-emerald-500 transition-all
+  duration-100 hover:scale-110 hover:bg-emerald-500
   hover:text-primary active:scale-125;
 }
 
@@ -736,9 +566,9 @@ span.text-red {
 }
 
 .cancel .icon {
-  color: red;
   font-size: 40px;
   margin-bottom: 10px;
+  @apply text-red-600;
 }
 
 .success h2 {
@@ -772,7 +602,7 @@ span.text-red {
 .success .cancel,
 .description .email {
   margin-left: 5px;
-  color: #f02d34;
+  @apply text-red-600;
 }
 
 .product-max-qty {
@@ -791,19 +621,6 @@ span.text-red {
     left: 80px;
     top: 80px;
     border-radius: 50%;
-  }
-
-  .footer-banner-container {
-    height: 560px;
-    margin-top: 80px;
-  }
-
-  .footer-banner-image {
-    width: 77%;
-    left: 30%;
-    top: 6%;
-    height: 56%;
-    object-fit: contain;
   }
 
   .banner-desc .left h3 {
@@ -963,165 +780,4 @@ span.text-red {
   .btn-container {
     margin: auto;
   }
-}
-
-.text-gradient {
-  background: radial-gradient(
-    64.18% 64.18% at 71.16% 35.69%,
-    #def9fa 0.89%,
-    #bef3f5 17.23%,
-    #9dedf0 42.04%,
-    #7de7eb 55.12%,
-    #5ce1e6 71.54%,
-    #33bbcf 100%
-  );
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.text-gradient-ecommerce {
-  background: radial-gradient(
-    64.18% 64.18% at 71.16% 35.69%,
-    #cc3ac5 0.89%,
-    #eb27f1 17.23%,
-    #e0188d 42.04%,
-    #ff9100 55.12%,
-    #ffef5b 71.54%,
-    #ccec16 100%
-  );
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.bg-blue-gradient {
-  background: linear-gradient(
-    157.81deg,
-    #def9fa -43.27%,
-    #bef3f5 -21.24%,
-    #9dedf0 12.19%,
-    #7de7eb 29.82%,
-    #5ce1e6 51.94%,
-    #33bbcf 90.29%
-  );
-}
-
-.bg-black-gradient {
-  background: linear-gradient(
-    144.39deg,
-    #ffffff -278.56%,
-    #6d6d6d -78.47%,
-    #11101d 91.61%
-  );
-}
-
-.bg-black-gradient-2 {
-  background: linear-gradient(
-    -168.39deg,
-    #ffffff -278.56%,
-    #6d6d6d -78.47%,
-    #11101d 91.61%
-  );
-}
-
-.bg-gray-gradient {
-  background: linear-gradient(
-    153.47deg,
-    rgba(255, 255, 255, 0) -341.94%,
-    #14101d 95.11%
-  );
-}
-
-.blue__gradient {
-  background: linear-gradient(180deg, rgba(188, 165, 255, 0) 0%, #214d76 100%);
-  filter: blur(123px);
-}
-
-.pink__gradient {
-  background: linear-gradient(90deg, #f4c4f3 0%, #fc67fa 100%);
-  filter: blur(900px);
-}
-
-.white__gradient {
-  background: rgba(255, 255, 255, 0.5);
-  filter: blur(750px);
-}
-
-.slide-animation-left {
-  opacity: 0;
-  transform: translateX(-100%);
-  transition: transform 1000ms ease-in-out, opacity 1000ms ease-in-out;
-}
-
-.slide-animation-left.in-view {
-  opacity: 1;
-  transform: translateX(0);
-}
-
-.slide-animation-right {
-  opacity: 0;
-  transform: translateX(+100%);
-  transition: transform 1000ms ease-in-out, opacity 1000ms ease-in-out;
-}
-
-.slide-animation-right.in-view {
-  opacity: 1;
-  transform: translateX(0);
-}
-
-.slide-animation-top {
-  opacity: 0;
-  transform: translateY(-5%);
-  transition: transform 1000ms ease-in-out, opacity 1000ms ease-in-out;
-}
-
-.slide-animation-top.in-view {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.appear-animation {
-  opacity: 0;
-  scale: 0;
-  transition: transform 1000ms ease-in-out, opacity 1000ms ease-in-out,
-    scale 1000ms ease-in-out;
-}
-
-.appear-animation.in-view {
-  opacity: 1;
-  scale: 1;
-}
-
-.opacity-0 {
-  opacity: 0;
-  transition: opacity 1s ease-in-out;
-}
-.opacity-1 {
-  opacity: 1;
-  transition: opacity 10s ease-in-out;
-}
-
-.animate-top-hidden {
-  opacity: 0;
-  transform: translateY(-110%);
-}
-
-.animate-top-visible {
-  opacity: 1;
-  transform: translateY(0);
-  transition: transform 500ms ease-in-out, opacity 500ms ease-in-out;
-}
-
-.animate-left-hidden {
-  opacity: 0;
-  transform: translateX(-100%);
-}
-
-.animate-left-visible {
-  opacity: 1;
-  transform: translateX(0%);
-  transition: transform 500ms ease-in-out, opacity 500ms ease-in-out;
 }

@@ -34,6 +34,7 @@ export default async function ProductDetails({
               alt={`Image of '${name}`}
               height={400}
               width={400}
+              priority
             />
           </div>
         )}
