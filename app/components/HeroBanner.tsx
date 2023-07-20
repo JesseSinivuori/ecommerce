@@ -27,7 +27,7 @@ export default function HeroBanner({
       <div className="hero-banner-gradient"></div>
       <div className="flex flex-col">
         <div className="relative flex-1">
-          <div className="flex ">
+          <div className="flex">
             <h1 className="hero-banner-text-gradient">
               {heroBanner.largeText1}
             </h1>
@@ -41,7 +41,7 @@ export default function HeroBanner({
               </p>
             </div>
           </div>
-          <h3 className="relative z-10 ml-[40px] hidden w-[260px] rounded-xl bg-[#5a7557] font-extralight md:block md:bg-transparent">
+          <h3 className="relative z-10 ml-[40px] hidden w-[260px] rounded-xl bg-emerald-900 font-extralight md:block md:bg-transparent">
             {heroBanner.midText}
           </h3>
         </div>
@@ -61,7 +61,7 @@ export default function HeroBanner({
 
       <div className="flex w-full items-end justify-end">
         <h3
-          className={`z-1 relative m-[40px] hidden rounded-xl bg-[#5a7557] p-[10px]
+          className={`z-1 relative m-[40px] hidden rounded-xl bg-emerald-900 p-[10px]
           font-extralight xs:flex md:hidden md:bg-transparent`}
         >
           {heroBanner.midText}

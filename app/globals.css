@@ -560,9 +560,9 @@ a {
 }
 
 .success .icon {
-  color: green;
   font-size: 40px;
   margin-bottom: 10px;
+  @apply text-emerald-500;
 }
 
 .cancel .icon {
@@ -661,7 +661,7 @@ a {
 
   .hero-banner-container h3 {
     font-size: 20px;
-    background: #5a7557;
+    @apply bg-emerald-900;
   }
 
   .hero-banner-container button {
