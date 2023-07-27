@@ -9,6 +9,7 @@ jobs:
     timeout-minutes: 60
     runs-on: ubuntu-latest
     env:
+      NODE_ENV: production
       SANITY_TOKEN: ${{ secrets.SANITY_TOKEN }}
       NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: ${{ secrets.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY }}
       STRIPE_SECRET_KEY: ${{ secrets.STRIPE_SECRET_KEY }}

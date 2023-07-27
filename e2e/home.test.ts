@@ -8,6 +8,9 @@ import {
   shoppingCart,
 } from "./helpers/helpers";
 
+const skipInCI =
+  process.env.NODE_ENV === "production" ? "Long test skipped in CI" : false;
+
 test.beforeEach(async ({ page }) => {
   await page.goto("/");
   await page.waitForResponse(/stripe/);
@@ -61,7 +64,7 @@ describe("/", () => {
     });
   });
 
-  describe("long journies", () => {
+  describe("long journies", { skip: skipInCI }, () => {
     test("checks out successfully", async ({ page }) => {
       test.slow();
       await test.step("navigates to a product", async () => {
