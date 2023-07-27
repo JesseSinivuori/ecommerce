@@ -7,7 +7,9 @@ type FooterProps = {
 export default function Footer(props: FooterProps) {
   return (
     <div
-      className={`bottom-0 left-0 right-0 w-full ${styles.paddingX} ${styles.flexCenter} ${props.className}`}
+      className={`bottom-0 left-0 right-0 w-full ${styles.paddingX} ${
+        styles.flexCenter
+      } ${props.className ?? ""}`}
     >
       <div className={`${styles.boxWidth} max-w-[1000px] `}>
         <section className={`${styles.flexCenter} mt-6 flex-col py-6`}>

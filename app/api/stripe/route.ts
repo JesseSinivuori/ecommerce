@@ -8,12 +8,10 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
 });
 
 export async function POST(req: Request, res: Response) {
-  const body = await req.json();
-  const headersList = headers();
-  const origin = headersList.get("origin");
-
   try {
-    console.log("🚀 ~ file: route.ts:16 ~ POST ~ origin:", origin);
+    const body = await req.json();
+    const headersList = headers();
+    const origin = headersList.get("origin");
 
     const params: Stripe.Checkout.SessionCreateParams = {
       submit_type: "pay",

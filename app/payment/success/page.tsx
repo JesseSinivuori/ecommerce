@@ -30,10 +30,8 @@ export default function Success() {
             purchase@example.com
           </a>
         </p>
-        <Link href={"/"}>
-          <button type="button" className="btn w-[300px]">
-            Continue Shopping
-          </button>
+        <Link href={"/"} className="btn w-[300px] text-center">
+          Continue Shopping
         </Link>
       </div>
     </div>

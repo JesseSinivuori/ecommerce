@@ -11,6 +11,7 @@ import {
 } from "../../components/index";
 import Image from "next/image";
 import { getProduct, getProducts } from "@/app/lib/fetch";
+import { Metadata } from "next";
 
 export default async function ProductDetails({
   params: { slug },
@@ -40,7 +41,7 @@ export default async function ProductDetails({
         )}
         <div className="product-detail-desc max-w-full flex-wrap xss:max-w-[410px]">
           <div className="flex justify-start">
-            <h3 className="relative mb-4 w-[110px] rounded-xl bg-[#5a7557] p-1 font-extralight">
+            <h3 className="relative mb-4 w-[110px] rounded-xl bg-emerald-900 p-1 font-extralight">
               Free Delivery
             </h3>
           </div>
@@ -62,7 +63,7 @@ export default async function ProductDetails({
             <div className="justify-start">
               <h3>Quantity: </h3>
             </div>
-            <QuantityButtons />
+            <QuantityButtons product={product} />
           </div>
           <BuyButtons product={product} />
         </div>
@@ -89,4 +90,30 @@ export const generateStaticParams = async () => {
     slug: product.slug.current,
   }));
   return params;
+};
+
+export const generateMetadata = async ({
+  params: { slug },
+}: {
+  params: { slug: string };
+}): Promise<Metadata> => {
+  const query = `*[_type == "product" && slug.current == '${slug}'][0] {
+    name,
+    details,
+    image
+  }`;
+
+  const product: ProductProps = await sanityClient.fetch(query);
+
+  const metadata: Metadata = {
+    title: `${product.name} - ${product.details}`,
+    description: product.details,
+    openGraph: {
+      title: product.name,
+      description: product.details,
+      images: [urlFor(product.image[0])],
+    },
+  };
+
+  return metadata;
 };

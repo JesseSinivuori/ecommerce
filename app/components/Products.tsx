@@ -1,14 +1,16 @@
 "use client";
+import { useMemo } from "react";
 import { useStateContext } from "../providers/StateContext";
 import { Product, ProductProps } from "./index";
 
 export default function Products({ products }: { products: ProductProps[] }) {
   const { category } = useStateContext();
 
-  const filteredProducts =
-    category !== "All"
+  const filteredProducts = useMemo(() => {
+    return category !== "All"
       ? products.filter((product) => product.category === category)
       : products;
+  }, [category, products]);
 
   return (
     <div className={`products-container`}>

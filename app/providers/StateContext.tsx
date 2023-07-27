@@ -3,7 +3,27 @@ import React, { useState, useContext, createContext, useEffect } from "react";
 import { toast } from "react-hot-toast";
 import { ProductProps } from "../components";
 
-const Context = createContext<any>(null);
+interface ContextType {
+  showCart: boolean;
+  cartItems: CartItemProps[];
+  totalPrice: number;
+  totalQuantities: number;
+  qty: number;
+  setQty: React.Dispatch<React.SetStateAction<number>>;
+  incQty: () => void;
+  decQty: () => void;
+  onAdd: (product: ProductProps, quantity: number) => void;
+  setShowCart: React.Dispatch<React.SetStateAction<boolean>>;
+  toggleCartItemQuantity: (id: string, value: "inc" | "dec") => void;
+  onRemove: (product: ProductProps) => void;
+  setCartItems: React.Dispatch<React.SetStateAction<CartItemProps[]>>;
+  setTotalPrice: React.Dispatch<React.SetStateAction<number>>;
+  setTotalQuantities: React.Dispatch<React.SetStateAction<number>>;
+  category: string;
+  setCategory: React.Dispatch<React.SetStateAction<string>>;
+}
+
+const Context = createContext<ContextType | null>(null);
 
 export interface CartItemProps {
   category: string;
@@ -19,8 +39,8 @@ export default function StateContext({
 }) {
   const [showCart, setShowCart] = useState(false);
   const [cartItems, setCartItems] = useState<CartItemProps[]>([]);
-  const [totalPrice, setTotalPrice] = useState(0);
-  const [totalQuantities, setTotalQuantities] = useState(0);
+  const [totalPrice, setTotalPrice] = useState<number>(0);
+  const [totalQuantities, setTotalQuantities] = useState<number>(0);
   const [qty, setQty] = useState(1);
   const [category, setCategory] = useState("All");
 
@@ -192,7 +212,7 @@ export default function StateContext({
 }
 
 export function useStateContext() {
-  return useContext(Context);
+  return useContext(Context) as ContextType;
 }
 
 export const getLocalStorage = (

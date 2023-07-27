@@ -12,6 +12,7 @@ import toast from "react-hot-toast";
 import Image from "next/image";
 import { OnClickOutside, CloseOnBack } from "./index";
 import copy from "copy-to-clipboard";
+import { useCallback } from "react";
 
 export default function Cart() {
   const {
@@ -61,6 +62,8 @@ export default function Cart() {
     toast.success("Stripe test card copied to clipboard.");
   };
 
+  const roundedTotalPrice = (Math.round(totalPrice * 100) / 100).toFixed(2);
+
   return (
     <CloseOnBack toggleState={showCart} setToggleState={setShowCart}>
       <OnClickOutside
@@ -69,23 +72,27 @@ export default function Cart() {
       >
         <div
           id="cart"
-          data-testid="cart"
-          className={`cart-wrapper h-screen w-full max-w-[680px]
+          className={`cart-wrapper h-[100svh] w-full max-w-[680px]
           overflow-hidden overscroll-none bg-nav transition-all duration-500
           ${showCart ? "translate-x-0" : "translate-x-full"}`}
         >
-          <div className={`cart-container h-[100svh] rounded-md`}>
+          <div
+            className={`cart-container h-full rounded-md`}
+            aria-label="shopping cart"
+            aria-expanded={showCart ? "true" : "false"}
+          >
             <button
+              aria-label="close cart"
               type="button"
               className={`cart-heading hidden pb-8 transition-all duration-100
               hover:opacity-50 ss:flex`}
               onClick={() => {
-                setShowCart((prev: any) => !prev);
+                setShowCart((prev: boolean) => !prev);
               }}
             >
               <AiOutlineLeft />
-              <span className="heading">Items</span>
-              <span className="cart-num-items">{totalQuantities}</span>
+              <p className="heading">Items</p>
+              <p className="cart-num-items">{totalQuantities}</p>
             </button>
             {!cartItems.length && (
               <div className="empty-cart">
@@ -124,7 +131,9 @@ export default function Cart() {
                         </div>
                         <div className="mt-[10px] flex items-center justify-center  xss:mt-[20px] xss:justify-start">
                           <p className="quantity-desc w-full min-w-[90px] max-w-[140px]">
-                            <span
+                            <button
+                              type="button"
+                              aria-label={`remove one ${item.name}`}
                               className="minus"
                               onClick={() => {
                                 item.quantity > 1
@@ -133,16 +142,18 @@ export default function Cart() {
                               }}
                             >
                               <AiOutlineMinus />
-                            </span>
+                            </button>
                             <span className="num">{item.quantity}</span>
-                            <span
+                            <button
+                              type="button"
+                              aria-label={`add one ${item.name}`}
                               className="plus"
                               onClick={() => {
                                 toggleCartItemQuantity(item._id, "inc");
                               }}
                             >
                               <AiOutlinePlus />
-                            </span>
+                            </button>
                           </p>
                         </div>
                       </div>
@@ -154,8 +165,8 @@ export default function Cart() {
               {cartItems.length >= 1 && (
                 <>
                   <div className="total">
-                    <h3>Total:</h3>
-                    <h3>{totalPrice.toFixed(2)}€</h3>
+                    <h3 aria-hidden>Total:</h3>
+                    <h3 aria-label="total price">{roundedTotalPrice}€</h3>
                   </div>
                   <div className="btn-container">
                     <button
@@ -169,6 +180,7 @@ export default function Cart() {
                 </>
               )}
               <button
+                aria-label="close cart"
                 type="button"
                 className={`cart-heading flex py-8 transition-all
               duration-100 hover:opacity-50 ss:hidden`}

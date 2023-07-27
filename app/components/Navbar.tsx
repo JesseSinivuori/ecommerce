@@ -47,8 +47,8 @@ export default function Navbar() {
     }
   }, [toggleMobileMenu]);
 
-  const linkStyle = (route: string): string => {
-    return pathname === route
+  const linkStyle = (currentPathname: string): string => {
+    return pathname === currentPathname
       ? "text-white/50"
       : `cursor-pointer select-none text-[16px] text-white/75
       hover:text-white text-white duration-100 ease-in-out `;
@@ -67,10 +67,10 @@ export default function Navbar() {
         <nav>
           <ul className="flex w-full list-none items-center gap-4 px-8 py-4">
             <div className="flex flex-1">
-              <HomeLogo pathname={pathname} />
+              <HomeLogo />
             </div>
             <div className="hidden justify-end gap-4 xs:flex">
-              <NavLinks pathname={pathname} linkStyle={linkStyle} />
+              <NavLinks linkStyle={linkStyle} />
             </div>
             <div className="flex justify-end xs:hidden">
               <MobileMenu
@@ -78,14 +78,14 @@ export default function Navbar() {
                 setToggleMobileMenu={setToggleMobileMenu}
               >
                 <div className="space-y-4">
-                  <NavLinks pathname={pathname} linkStyle={linkStyle} />
+                  <NavLinks linkStyle={linkStyle} />
                 </div>
               </MobileMenu>
             </div>
             <CartIcon
+              showCart={showCart}
               setShowCart={setShowCart}
               totalQuantities={totalQuantities}
-              pathname={pathname}
             />
           </ul>
         </nav>
@@ -96,17 +96,12 @@ export default function Navbar() {
 }
 
 const NavLinks = ({
-  pathname,
   linkStyle,
 }: {
-  pathname: string;
-  linkStyle: (route: string) => string;
+  linkStyle: (pathname: string) => string;
 }) => (
   <>
-    <Link
-      href={!pathname.startsWith("/store") ? "/" : "/store/home"}
-      className={`${linkStyle("/")} p-2 `}
-    >
+    <Link href={"/"} className={`${linkStyle("/")} p-2 `}>
       Home
     </Link>
 
@@ -114,8 +109,9 @@ const NavLinks = ({
   </>
 );
 
-const HomeLogo = ({ pathname }: { pathname: string }) => (
+const HomeLogo = () => (
   <Link
+    aria-label="go to home"
     href={"/"}
     className="flex rounded-full bg-transparent p-2 font-light text-white hover:opacity-50"
   >
@@ -139,15 +135,16 @@ export const ContactLink = () => (
 const CartIcon = ({
   setShowCart,
   totalQuantities,
-  pathname,
+  showCart,
 }: {
   setShowCart: React.Dispatch<SetStateAction<boolean>>;
   totalQuantities: number;
-  pathname: string;
+  showCart: boolean;
 }) => {
   return (
     <button
-      data-testid="cart-button-mobile"
+      aria-label="toggle cart"
+      aria-expanded={showCart ? "true" : "false"}
       type="button"
       className={`cart-icon flex hover:opacity-50`}
       onClick={() => {
@@ -155,7 +152,9 @@ const CartIcon = ({
       }}
     >
       <AiOutlineShopping />
-      <span className="cart-item-qty">{totalQuantities}</span>
+      <span id="cartQuantity" className="cart-item-qty">
+        {totalQuantities}
+      </span>
     </button>
   );
 };

@@ -1,8 +1,8 @@
 "use client";
-import { useState } from "react";
 import styles from "../style";
 import { ProductProps } from "./Product";
 import { useStateContext } from "../providers/StateContext";
+import { useMemo } from "react";
 
 export default function CategoryMenu({
   products,
@@ -10,15 +10,18 @@ export default function CategoryMenu({
   products: ProductProps[];
 }) {
   const { category, setCategory } = useStateContext();
-  const allCategories = products.map((product) => product.category);
-  const uniqueCategories = [...new Set(allCategories)];
-  const categories = ["All", ...uniqueCategories];
+  const categories = useMemo(() => {
+    const allCategories = products.map((product) => product.category);
+    const uniqueCategories = [...new Set(allCategories)];
+    const categories = ["All", ...uniqueCategories];
+    return categories;
+  }, [products]);
 
   return (
-    <div className={`${styles.flexCenter} mt-8 flex-col`}>
+    <div className={`${styles.flexCenter} flex-col`}>
       <div
-        className={`m-2 flex h-full max-h-[176px] w-full min-w-[240px]
-        flex-wrap justify-center overflow-auto py-8 text-white`}
+        className={`max-w-screen m-2 flex h-full w-full 
+        flex-row justify-start overflow-x-auto py-8 text-white xss:flex-wrap xss:justify-center`}
       >
         {categories.map((item) => (
           <button

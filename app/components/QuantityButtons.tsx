@@ -2,8 +2,13 @@
 import { AiOutlineMinus, AiOutlinePlus } from "react-icons/ai";
 import { useStateContext } from "../providers/StateContext";
 import { useEffect } from "react";
+import { ProductProps } from "./Product";
 
-export default function QuantityButtons() {
+export default function QuantityButtons({
+  product,
+}: {
+  product: ProductProps;
+}) {
   const { decQty, incQty, qty, setQty } = useStateContext();
 
   useEffect(() => {
@@ -13,13 +18,25 @@ export default function QuantityButtons() {
   return (
     <div>
       <span className="quantity-desc w-[110px] xss:w-[140px] xs:w-[160px]">
-        <span className="minus" onClick={decQty}>
+        <button
+          type="button"
+          aria-label={`decrease ${product.name} quantity by one`}
+          className="minus"
+          onClick={decQty}
+        >
           <AiOutlineMinus />
+        </button>
+        <span aria-label={`${product.name} quantity`} className="num">
+          {qty}
         </span>
-        <span className="num">{qty}</span>
-        <span className="plus" onClick={incQty}>
+        <button
+          type="button"
+          aria-label={`increase ${product.name} quantity by one`}
+          className="plus"
+          onClick={incQty}
+        >
           <AiOutlinePlus />
-        </span>
+        </button>
       </span>
     </div>
   );
