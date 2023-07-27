@@ -8,8 +8,7 @@ import {
   shoppingCart,
 } from "./helpers/helpers";
 
-const skipInCI =
-  process.env.NODE_ENV === "production" ? "Long test skipped in CI" : false;
+const skipInCI = process.env.CI ? "Long test skipped in CI" : false;
 
 test.beforeEach(async ({ page }) => {
   await page.goto("/");
