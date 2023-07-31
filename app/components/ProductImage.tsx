@@ -27,15 +27,14 @@ export function ProductImage({
 
   return (
     <div>
-      <div className="image-container">
-        <Image
-          src={urlFor(image[index])}
-          className="product-detail-image"
-          alt={`Image of '${name}`}
-          height={400}
-          width={400}
-        />
-      </div>
+      <Image
+        src={urlFor(image[index])}
+        className="rounded-xl"
+        alt={`Image of '${name}`}
+        height={400}
+        width={400}
+      />
+
       {image?.length > 1 && (
         <div className="small-images-container">
           {image?.map((item: ProductImageProps, i: number) => (

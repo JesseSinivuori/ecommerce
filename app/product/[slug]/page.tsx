@@ -4,12 +4,11 @@ import {
   CategoryMenu,
   Products,
   Footer,
-  QuantityButtons,
   BuyButtons,
   ProductImage,
   ProductProps,
+  ProcuctQuantityButtons,
 } from "../../components/index";
-import Image from "next/image";
 import { getProduct, getProducts } from "@/app/lib/fetch";
 import { Metadata } from "next";
 
@@ -24,24 +23,11 @@ export default async function ProductDetails({
 
   return (
     <div>
-      <div className="product-detail-container">
-        {image.length > 1 ? (
-          <ProductImage image={image} name={name} />
-        ) : (
-          <div className="image-container">
-            <Image
-              src={urlFor(image[0])}
-              className="product-detail-image"
-              alt={`Image of '${name}`}
-              height={400}
-              width={400}
-              priority
-            />
-          </div>
-        )}
+      <div className="text-white overflow-hidden p-8 gap-8 flex flex-wrap justify-center md:justify-start">
+        <ProductImage image={image} name={name} />
         <div className="product-detail-desc max-w-full flex-wrap xss:max-w-[410px]">
           <div className="flex justify-start">
-            <h3 className="relative mb-4 w-[110px] rounded-xl bg-emerald-900 p-1 font-extralight">
+            <h3 className="relative mb-4 w-[110px] rounded-md bg-emerald-900 p-1 font-extralight">
               Free Delivery
             </h3>
           </div>
@@ -63,7 +49,7 @@ export default async function ProductDetails({
             <div className="justify-start">
               <h3>Quantity: </h3>
             </div>
-            <QuantityButtons product={product} />
+            <ProcuctQuantityButtons product={product} />
           </div>
           <BuyButtons product={product} />
         </div>

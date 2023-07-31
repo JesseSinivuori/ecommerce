@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useStateContext } from "../providers/StateContext";
 import { AiOutlineShopping } from "react-icons/ai";
-import { OnClickOutside, CloseOnBack, Cart } from "../components/index";
+import { OnClickOutside, OnPopState, Cart } from "../components/index";
 import { usePathname } from "next/navigation";
 
 export default function Navbar() {
@@ -56,16 +56,17 @@ export default function Navbar() {
 
   return (
     <div
-      className={`select-none overscroll-none rounded-b-xl ${
+      className={`fixed left-0 right-0 top-0 z-[9999]
+      select-none overscroll-none rounded-b-xl ${
         showCart && " backdrop-blur-[25px]"
       }
-      ${showCart ? "fixed inset-0 h-screen w-full" : "h-full"}`}
+      ${showCart ? "fixed inset-0 h-full w-full" : ""}`}
     >
       <div
         className={`m-auto ${navStyles} w-full max-w-[1400px] rounded-b-xl  transition-all duration-300`}
       >
         <nav>
-          <ul className="flex w-full list-none items-center gap-4 px-8 py-4">
+          <div className="flex w-full items-center gap-4 px-8 py-4">
             <div className="flex flex-1">
               <HomeLogo />
             </div>
@@ -87,7 +88,7 @@ export default function Navbar() {
               setShowCart={setShowCart}
               totalQuantities={totalQuantities}
             />
-          </ul>
+          </div>
         </nav>
       </div>
       <Cart />
@@ -120,7 +121,7 @@ const HomeLogo = () => (
   </Link>
 );
 
-export const ContactLink = () => (
+const ContactLink = () => (
   <Link
     href={"https://portfolio-one-gamma-55.vercel.app/portfolio/contact"}
     className={`flex cursor-pointer select-none
@@ -148,7 +149,7 @@ const CartIcon = ({
       type="button"
       className={`cart-icon flex hover:opacity-50`}
       onClick={() => {
-        setShowCart((prev: boolean) => !prev);
+        setShowCart((prev) => !prev);
       }}
     >
       <AiOutlineShopping />
@@ -193,10 +194,7 @@ const MobileMenu = ({
       className={`fixed right-0 top-0 h-screen overflow-x-clip overflow-y-scroll px-4 transition-all duration-300
                 ${!toggleMobileMenu && "hidden"}`}
     >
-      <CloseOnBack
-        toggleState={toggleMobileMenu}
-        setToggleState={setToggleMobileMenu}
-      >
+      <OnPopState onPopState={() => setToggleMobileMenu(false)}>
         <div
           className={`mr-4 mt-20 flex max-h-full`}
           onClick={() => setToggleMobileMenu(false)}
@@ -212,7 +210,7 @@ const MobileMenu = ({
             </ul>
           </OnClickOutside>
         </div>
-      </CloseOnBack>
+      </OnPopState>
     </div>
   </div>
 );

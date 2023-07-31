@@ -1,7 +1,7 @@
 "use client";
 import { useMemo } from "react";
 import { useStateContext } from "../providers/StateContext";
-import { Product, ProductProps } from "./index";
+import Product, { type ProductProps } from "./Product";
 
 export default function Products({ products }: { products: ProductProps[] }) {
   const { category } = useStateContext();
@@ -13,14 +13,12 @@ export default function Products({ products }: { products: ProductProps[] }) {
   }, [category, products]);
 
   return (
-    <div className={`products-container`}>
-      <div className={`flex flex-wrap items-start justify-center`}>
-        {filteredProducts.map((item) => (
-          <div className="m-[10px]" key={item._id}>
-            <Product product={item} />
-          </div>
-        ))}
-      </div>
+    <div className="flex flex-wrap justify-center">
+      {filteredProducts.map((item) => (
+        <div className="m-4" key={item._id}>
+          <Product product={item} />
+        </div>
+      ))}
     </div>
   );
 }

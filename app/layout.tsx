@@ -12,8 +12,8 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: `Jesse's Kitchen`,
-  description: "A restaurant themed ecommerce website",
+  title: "Jesse's Kitchen",
+  description: "A restaurant themed ecommerce website.",
 };
 
 export default async function RootLayout({
@@ -27,20 +27,18 @@ export default async function RootLayout({
         className={`${poppins.className} m-auto flex w-full max-w-[1400px] flex-col justify-center overflow-hidden overflow-y-auto px-2 pt-24 xss:px-4`}
       >
         <StateContext>
-          <div className="fixed left-0 right-0 top-0 z-[9999]">
-            <Navbar />
-            <Toaster
-              containerClassName={`mt-16 lg:mt-0 z-[9999]`}
-              toastOptions={{
-                style: {
-                  padding: "16px",
-                  color: "white",
-                  backgroundColor: "var(--color-nav)",
-                },
-              }}
-            />
-          </div>
-          {children}
+          <Navbar />
+          <Toaster
+            containerClassName={`mt-16 lg:mt-0 z-[9999]`}
+            toastOptions={{
+              style: {
+                padding: "16px",
+                color: "white",
+                backgroundColor: "var(--color-nav)",
+              },
+            }}
+          />
+          <main>{children}</main>
         </StateContext>
       </body>
     </html>

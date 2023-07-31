@@ -2,7 +2,7 @@ import { CategoryMenu, HeroBanner, Products, Footer } from "./components/index";
 import { getBannerData, getProducts } from "./lib/fetch";
 
 export default async function Home() {
-  const [products, bannerData]: any = await Promise.all([
+  const [products, bannerData] = await Promise.all([
     getProducts(),
     getBannerData(),
   ]);

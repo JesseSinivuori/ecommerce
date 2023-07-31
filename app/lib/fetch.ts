@@ -1,11 +1,16 @@
+import { ProductProps } from "../components";
 import { sanityClient } from "./sanityClient";
 
-export const getProducts = async () => {
-  const query = '*[_type == "product"]';
-  const products = await sanityClient.fetch(query, {
-    next: { revalidate: 600 },
-  });
-  return products;
+export const getProducts = async (): Promise<ProductProps[]> => {
+  try {
+    const query = '*[_type == "product"]';
+    const products = await sanityClient.fetch(query, {
+      next: { revalidate: 600 },
+    });
+    return products;
+  } catch (error) {
+    throw new Error("Fetching products failed.");
+  }
 };
 
 export const getProduct = async (slug: string) => {

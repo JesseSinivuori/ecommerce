@@ -2,6 +2,7 @@ import Link from "next/link";
 import { urlFor } from "../lib/sanityClient";
 import Image from "next/image";
 import { ProductImageProps } from "./ProductImage";
+import styles from "../style";
 
 export interface ProductProps {
   _updatedAt: string;
@@ -18,23 +19,25 @@ export interface ProductProps {
   quantity: number;
 }
 
-export function Product({ product }: { product: ProductProps }) {
+export default function Product({ product }: { product: ProductProps }) {
   const { image, name, price, slug } = product;
 
   return (
     <Link href={`/product/${slug.current}`}>
-      <div className="product-card">
+      <div
+        className={`m-4 cursor-pointer transition-all duration-100 hover:scale-110`}
+      >
         <Image
           src={urlFor(image && image[0])}
           alt={`Image of ${name}`}
           width={300}
           height={300}
-          className="product-image"
+          className="rounded-xl object-contain"
         />
-        <p className="product-name min-w-[200px]sm:w-[300px] w-[200px]">
+        <p className="product-name w-[200px] min-w-[200px] text-white sm:w-[300px]">
           {name}
         </p>
-        <p className="product-price">{price}€</p>
+        <p className={`${styles.paragraph} product-price `}>{price}€</p>
       </div>
     </Link>
   );

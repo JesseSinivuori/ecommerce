@@ -79,7 +79,9 @@ describe("/", () => {
         await expect(shoppingCart(page)).toBeInViewport();
       });
       await test.step("navigates to stripe checkout", async () => {
-        await page.getByRole("button", { name: "Checkout" }).click();
+        await page
+          .getByRole("button", { name: "Checkout", exact: true })
+          .click();
         await page.waitForURL(/checkout.stripe.com/);
       });
       await test.step("fills payment info and checks out", async () => {
@@ -125,7 +127,7 @@ describe("/", () => {
         await expect(shoppingCart(page)).toBeInViewport();
       });
       await test.step("navigates to stripe checkout", async () => {
-        await page.getByText("Checkout").click();
+        await page.getByText("Checkout", { exact: true }).click();
         await page.waitForURL(/checkout.stripe.com/);
       });
       await test.step("cancels checkout", async () => {
@@ -204,7 +206,7 @@ describe("/", () => {
       page,
       isMobile,
     }) => {
-      test.slow();
+      test.setTimeout(1000 * 60 * 3);
       await test.step("navigates to a product(bread, 9.99€)", async () => {
         await page.getByText("Bread").click();
         await page.waitForURL("/product/bread");
@@ -212,7 +214,8 @@ describe("/", () => {
       await test.step("adds 15 products to cart(bread, 9.99€)", async () => {
         await checkCartQuantity(page, "0");
         await page
-          .getByRole("button", { name: "increase bread quantity by one" })
+          .getByRole("main")
+          .getByRole("button", { name: "add one bread" })
           .click({ clickCount: 14 });
         await addToCartButton(page).click();
 
@@ -224,7 +227,8 @@ describe("/", () => {
       });
       await test.step("adds 24 products to cart(pizza, 16.99€)", async () => {
         await page
-          .getByRole("button", { name: "increase pizza quantity by one" })
+          .getByRole("main")
+          .getByRole("button", { name: "add one pizza" })
           .click({ clickCount: 23 });
         await addToCartButton(page).click();
         await checkCartQuantity(page, "39");
@@ -242,21 +246,23 @@ describe("/", () => {
       });
       await test.step("adds 10 products to cart(steak, 12.99€)", async () => {
         await page
-          .getByRole("button", { name: "increase steak quantity by one" })
+          .getByRole("main")
+          .getByRole("button", { name: "add one steak" })
           .click({ clickCount: 9 });
         await addToCartButton(page).click();
         await checkCartQuantity(page, "49");
       });
       await test.step("opens cart with Order Now button(adds 27 steaks, 12.99€)", async () => {
         await page
-          .getByRole("button", { name: "decrease steak quantity by one" })
+          .getByRole("main")
+          .getByLabel("remove one steak")
           .click({ clickCount: 26 });
         await page.getByRole("button", { name: "Order Now" }).click();
         await checkCartQuantity(page, "50");
         await expect(shoppingCart(page)).toBeInViewport();
       });
       await test.step("checks total price", async () => {
-        const totalPrice = await page.getByLabel(/total price/).innerText();
+        const totalPrice = await page.getByLabel("total price").innerText();
         const calculatedTotal = (
           Math.round((15 * 9.99 + 24 * 16.99 + 11 * 12.99) * 100) / 100
         ).toFixed(2);
@@ -271,53 +277,152 @@ describe("/", () => {
       });
       await test.step("goes crazy with plus/minus buttons in cart", async () => {
         await page
+          .getByLabel("shopping cart")
           .getByRole("button", { name: "remove one bread" })
           .click({ clickCount: 8 });
+        expect(
+          await page
+            .getByLabel("shopping cart")
+            .getByLabel("bread quantity")
+            .innerText()
+        ).toEqual("7");
         await page
+          .getByLabel("shopping cart")
           .getByRole("button", { name: "add one bread" })
           .click({ clickCount: 13 });
+        expect(
+          await page
+            .getByLabel("shopping cart")
+            .getByLabel("bread quantity")
+            .innerText()
+        ).toEqual("20");
         await page
+          .getByLabel("shopping cart")
           .getByRole("button", { name: "add one pizza" })
           .click({ clickCount: 24 });
+        expect(
+          await page
+            .getByLabel("shopping cart")
+            .getByLabel("pizza quantity")
+            .innerText()
+        ).toEqual("48");
         await page
+          .getByLabel("shopping cart")
           .getByRole("button", { name: "remove one bread" })
           .click({ clickCount: 4 });
+        expect(await page.getByLabel("bread quantity").innerText()).toEqual(
+          "16"
+        );
         await page
+          .getByLabel("shopping cart")
           .getByRole("button", { name: "add one bread" })
           .click({ clickCount: 8 });
+        expect(await page.getByLabel("bread quantity").innerText()).toEqual(
+          "24"
+        );
         await page
+          .getByLabel("shopping cart")
           .getByRole("button", { name: "remove one steak" })
           .click({ clickCount: 5 });
+        expect(
+          await page
+            .getByLabel("shopping cart")
+            .getByLabel("steak quantity")
+            .innerText()
+        ).toEqual("6");
         await page
+          .getByLabel("shopping cart")
           .getByRole("button", { name: "add one steak" })
           .click({ clickCount: 13 });
+        expect(
+          await page
+            .getByLabel("shopping cart")
+            .getByLabel("steak quantity")
+            .innerText()
+        ).toEqual("19");
         await page
+          .getByLabel("shopping cart")
           .getByRole("button", { name: "remove one steak" })
           .click({ clickCount: 1 });
+        expect(
+          await page
+            .getByLabel("shopping cart")
+            .getByLabel("steak quantity")
+            .innerText()
+        ).toEqual("18");
         await page
+          .getByLabel("shopping cart")
           .getByRole("button", { name: "add one steak" })
           .click({ clickCount: 11 });
+        expect(
+          await page
+            .getByLabel("shopping cart")
+            .getByLabel("steak quantity")
+            .innerText()
+        ).toEqual("29");
         await page
+          .getByLabel("shopping cart")
           .getByRole("button", { name: "remove one pizza" })
           .click({ clickCount: 2 });
+        expect(
+          await page
+            .getByLabel("shopping cart")
+            .getByLabel("pizza quantity")
+            .innerText()
+        ).toEqual("46");
         await page
+          .getByLabel("shopping cart")
           .getByRole("button", { name: "add one pizza" })
           .click({ clickCount: 3 });
+        expect(
+          await page
+            .getByLabel("shopping cart")
+            .getByLabel("pizza quantity")
+            .innerText()
+        ).toEqual("49");
         await page
+          .getByLabel("shopping cart")
           .getByRole("button", { name: "add one steak" })
           .click({ clickCount: 1 });
+        expect(
+          await page
+            .getByLabel("shopping cart")
+            .getByLabel("steak quantity")
+            .innerText()
+        ).toEqual("30");
         await page
+          .getByLabel("shopping cart")
           .getByRole("button", { name: "remove one steak" })
           .click({ clickCount: 1 });
+        expect(
+          await page
+            .getByLabel("shopping cart")
+            .getByLabel("steak quantity")
+            .innerText()
+        ).toEqual("29");
         await page
+          .getByLabel("shopping cart")
           .getByRole("button", { name: "add one steak" })
           .click({ clickCount: 1 });
+        expect(
+          await page
+            .getByLabel("shopping cart")
+            .getByLabel("steak quantity")
+            .innerText()
+        ).toEqual("30");
         await page
+          .getByLabel("shopping cart")
           .getByRole("button", { name: "remove one bread" })
           .click({ clickCount: 1 });
+        expect(
+          await page
+            .getByLabel("shopping cart")
+            .getByLabel("bread quantity")
+            .innerText()
+        ).toEqual("23");
       });
       await test.step("checks total price", async () => {
-        const totalPrice = await page.getByLabel(/total price/).innerText();
+        const totalPrice = await page.getByLabel("total price").innerText();
 
         const calculatedTotal = (
           Math.round((23 * 9.99 + 49 * 16.99 + 30 * 12.99) * 100) / 100
@@ -334,13 +439,16 @@ describe("/", () => {
       });
       await test.step("removes bread and pizza", async () => {
         await page
+          .getByLabel("shopping cart")
           .getByRole("button", { name: "remove one bread" })
           .click({ clickCount: 23 });
         await page
+          .getByLabel("shopping cart")
           .getByRole("button", { name: "remove one pizza" })
           .click({ clickCount: 49 });
         await page
-          .getByRole("button", { name: "remove one steak" })
+          .getByLabel("shopping cart")
+          .getByLabel("remove one Steak")
           .click({ clickCount: 29 });
       });
       await test.step("checks total price", async () => {
@@ -367,7 +475,7 @@ describe("/", () => {
         await checkCartQuantity(page, "1");
         await page
           .getByRole("button", {
-            name: "increase chocolate cake quantity by one",
+            name: "add one chocolate cake",
           })
           .click({ clickCount: 14 });
         await addToCartButton(page).click();
@@ -380,7 +488,7 @@ describe("/", () => {
       await test.step("adds 7 products to cart(pancakes cake, 22.99€)", async () => {
         await page
           .getByRole("button", {
-            name: "increase pancakes quantity by one",
+            name: "add one pancakes",
           })
           .click({ clickCount: 6 });
         await addToCartButton(page).click();
@@ -407,12 +515,16 @@ describe("/", () => {
       });
       await test.step("removes all items from cart", async () => {
         await page
+          .getByLabel("shopping cart")
+
           .getByRole("button", { name: "remove one steak" })
           .click({ clickCount: 1 });
         await page
+          .getByLabel("shopping cart")
           .getByRole("button", { name: "remove one chocolate cake" })
           .click({ clickCount: 15 });
         await page
+          .getByLabel("shopping cart")
           .getByRole("button", { name: "remove one pancakes" })
           .click({ clickCount: 7 });
       });

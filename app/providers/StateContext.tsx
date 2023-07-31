@@ -5,7 +5,7 @@ import { ProductProps } from "../components";
 
 interface ContextType {
   showCart: boolean;
-  cartItems: CartItemProps[];
+  cartItems: ProductProps[];
   totalPrice: number;
   totalQuantities: number;
   qty: number;
@@ -16,7 +16,7 @@ interface ContextType {
   setShowCart: React.Dispatch<React.SetStateAction<boolean>>;
   toggleCartItemQuantity: (id: string, value: "inc" | "dec") => void;
   onRemove: (product: ProductProps) => void;
-  setCartItems: React.Dispatch<React.SetStateAction<CartItemProps[]>>;
+  setCartItems: React.Dispatch<React.SetStateAction<ProductProps[]>>;
   setTotalPrice: React.Dispatch<React.SetStateAction<number>>;
   setTotalQuantities: React.Dispatch<React.SetStateAction<number>>;
   category: string;
@@ -25,20 +25,13 @@ interface ContextType {
 
 const Context = createContext<ContextType | null>(null);
 
-export interface CartItemProps {
-  category: string;
-  price: number;
-  quantity: number;
-  _id: string;
-}
-
 export default function StateContext({
   children,
 }: {
   children: React.ReactNode;
 }) {
   const [showCart, setShowCart] = useState(false);
-  const [cartItems, setCartItems] = useState<CartItemProps[]>([]);
+  const [cartItems, setCartItems] = useState<ProductProps[]>([]);
   const [totalPrice, setTotalPrice] = useState<number>(0);
   const [totalQuantities, setTotalQuantities] = useState<number>(0);
   const [qty, setQty] = useState(1);

@@ -1,37 +1,35 @@
 "use client";
 import { AiOutlineMinus, AiOutlinePlus } from "react-icons/ai";
-import { useStateContext } from "../providers/StateContext";
-import { useEffect } from "react";
 import { ProductProps } from "./Product";
 
 export default function QuantityButtons({
   product,
+  decQty,
+  incQty,
+  qty,
 }: {
   product: ProductProps;
+  decQty: () => void;
+  incQty: () => void;
+  qty: number;
 }) {
-  const { decQty, incQty, qty, setQty } = useStateContext();
-
-  useEffect(() => {
-    setQty(1);
-  }, [setQty]);
-
   return (
     <div>
-      <span className="quantity-desc w-[110px] xss:w-[140px] xs:w-[160px]">
+      <span className="quantity-desc flex items-center">
         <button
           type="button"
-          aria-label={`decrease ${product.name} quantity by one`}
+          aria-label={`remove one ${product.name}`}
           className="minus"
           onClick={decQty}
         >
           <AiOutlineMinus />
         </button>
-        <span aria-label={`${product.name} quantity`} className="num">
+        <span aria-label={`${product.name} quantity`} className="px-8 w-20">
           {qty}
         </span>
         <button
           type="button"
-          aria-label={`increase ${product.name} quantity by one`}
+          aria-label={`add one ${product.name}`}
           className="plus"
           onClick={incQty}
         >

@@ -1,2 +1,2 @@
-export {default as CloseOnBack} from './CloseOnBack';
-export {default as OnClickOutside} from './OnClickOutside';
+export * from './OnClickOutside';
+export * from './OnPopState';
