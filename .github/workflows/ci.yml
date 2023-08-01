@@ -78,6 +78,7 @@ jobs:
 
       - name: Cache build folder
         uses: actions/cache@v3
+        id: cache-next-build
         with:
           path: .next
           key: ${{ runner.os }}-cache-next-build-${{ hashFiles('package-lock.json') }}
