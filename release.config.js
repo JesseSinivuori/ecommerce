@@ -1,4 +1,4 @@
-const releaseConfig = {
+module.exports = {
   branches: ["master", "main"],
   plugins: [
     [
@@ -12,5 +12,3 @@ const releaseConfig = {
     ],
   ],
 };
-
-export default releaseConfig;
