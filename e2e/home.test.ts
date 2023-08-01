@@ -57,7 +57,7 @@ describe("/", () => {
       await checkCartQuantity(page, "0");
     });
 
-    test.only("navigates to a product", async ({ page }) => {
+    test("navigates to a product", async ({ page }) => {
       await page.waitForLoadState();
       await page.getByRole("paragraph", { name: "Ramen", exact: true }).click();
       await page.waitForURL("/product/ramen");
