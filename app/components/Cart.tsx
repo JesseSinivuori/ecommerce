@@ -66,7 +66,7 @@ export default function Cart() {
           onClickOutside={() => setShowCart(false)}
         >
           <div
-            className={`py-8 px-4 h-screen flex flex-col  rounded-md overflow-auto overscroll-none `}
+            className={`py-8 px-4 h-[100svh] flex flex-col rounded-md overflow-auto overscroll-none `}
             role="dialog"
             aria-label="shopping cart"
           >
