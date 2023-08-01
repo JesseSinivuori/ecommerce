@@ -91,9 +91,6 @@ jobs:
           name: next-build
           path: .next
 
-      - name: Start application
-        run: npm run start &
-
       - name: Run Playwright tests
         run: npx playwright test
 
