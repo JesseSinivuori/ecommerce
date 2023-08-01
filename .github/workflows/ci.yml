@@ -35,8 +35,9 @@ jobs:
         run: npm run build
 
   test:
+    needs: build
     name: Playwright Tests
-    timeout-minutes: 20
+    timeout-minutes: 10
     runs-on: ubuntu-latest
     env:
       SANITY_TOKEN: ${{ secrets.SANITY_TOKEN }}
@@ -50,12 +51,12 @@ jobs:
           cache: "npm"
       - name: Cache NPM dependencies # (2)
         uses: actions/cache@v3
-        id: cache-primes
+        id: cache-npm
         with:
           path: node_modules
           key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
       - name: Run Playwright tests
-        run: npm run test:e2e
+        run: npx playwright test
       - uses: actions/upload-artifact@v3
         if: always()
         with:
@@ -81,7 +82,8 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: "lts/*"
+          node-version: 18
+          cache: "npm"
       - name: Cache NPM dependencies # (2)
         uses: actions/cache@v3
         id: cache-npm
