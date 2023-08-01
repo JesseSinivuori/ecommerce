@@ -57,13 +57,13 @@ export default function Navbar() {
   return (
     <div
       className={`fixed left-0 right-0 top-0 z-[9999]
-      select-none overscroll-none rounded-b-xl ${
-        showCart && " backdrop-blur-[25px]"
-      }
-      ${showCart ? "fixed inset-0 h-full w-full" : ""}`}
+      select-none overscroll-none rounded-b-xl 
+      ${showCart ? "h-full w-full ss:backdrop-blur-[25px]" : ""}`}
     >
       <div
-        className={`m-auto ${navStyles} w-full max-w-[1400px] rounded-b-xl  transition-all duration-300`}
+        className={`m-auto ${navStyles} max-w-[1400px]  rounded-b-xl ${
+          showCart && "ss:blur"
+        } transition-all duration-300`}
       >
         <nav>
           <div className="flex w-full items-center gap-4 px-8 py-4">
@@ -153,9 +153,7 @@ const CartIcon = ({
       }}
     >
       <AiOutlineShopping />
-      <span id="cartQuantity" className="cart-item-qty">
-        {totalQuantities}
-      </span>
+      <span className="cart-item-qty">{totalQuantities}</span>
     </button>
   );
 };
@@ -205,9 +203,9 @@ const MobileMenu = ({
               setToggleMobileMenu(false);
             }}
           >
-            <ul className="w-full min-w-[160px] list-none flex-col items-center rounded-md bg-nav p-2">
+            <div className="w-full min-w-[160px] list-none flex-col items-center rounded-md bg-nav p-2">
               {children}
-            </ul>
+            </div>
           </OnClickOutside>
         </div>
       </OnPopState>

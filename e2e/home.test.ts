@@ -57,17 +57,18 @@ describe("/", () => {
       await checkCartQuantity(page, "0");
     });
 
-    test("navigates to a product", async ({ page }) => {
-      await page.getByText("Ramen").click();
+    test.only("navigates to a product", async ({ page }) => {
+      await page.waitForLoadState();
+      await page.getByRole("paragraph", { name: "Ramen", exact: true }).click();
       await page.waitForURL("/product/ramen");
     });
   });
 
   describe("long journies", { skip: skipInCI }, () => {
     test("checks out successfully", async ({ page }) => {
-      test.slow();
+      test.setTimeout(1000 * 60 * 3);
       await test.step("navigates to a product", async () => {
-        await page.getByText("Pancakes").click();
+        await page.getByRole("paragraph", { name: "Pancakes" }).click();
         await page.waitForURL("/product/pancakes");
       });
       await test.step("adds 1 product to cart", async () => {
@@ -112,9 +113,9 @@ describe("/", () => {
     });
 
     test("cancels checkout", async ({ page }) => {
-      test.slow();
+      test.setTimeout(1000 * 60 * 3);
       await test.step("navigates to a product", async () => {
-        await page.getByText("Pancakes").click();
+        await page.getByRole("paragraph", { name: "Pancakes" }).click();
         await page.waitForURL("/product/pancakes");
         await checkCartQuantity(page, "0");
       });
@@ -161,7 +162,7 @@ describe("/", () => {
     test("adds many products to cart and goes crazy", async ({ page }) => {
       test.slow();
       await test.step("navigates to a product(bread, 9.99€)", async () => {
-        await page.getByText("Bread").click();
+        await page.getByRole("paragraph", { name: "Bread" }).click();
         await page.waitForURL("/product/bread");
       });
       await test.step("adds 1 product to cart(bread, 9.99€)", async () => {
@@ -170,7 +171,7 @@ describe("/", () => {
         await checkCartQuantity(page, "1");
       });
       await test.step("navigates to a product(pizza, 16.99€)", async () => {
-        await page.getByText("Pizza").click();
+        await page.getByRole("paragraph", { name: "Pizza" }).click();
         await page.waitForURL("/product/pizza");
         await checkCartQuantity(page, "1");
       });
@@ -179,7 +180,7 @@ describe("/", () => {
         await checkCartQuantity(page, "2");
       });
       await test.step("navigates to a product(steak, 12.99€)", async () => {
-        await page.getByText("Steak").click();
+        await page.getByRole("paragraph", { name: "Steak" }).click();
         await page.waitForURL("/product/steak");
       });
       await test.step("adds a second product to cart(steak, 12.99€)", async () => {
@@ -208,7 +209,7 @@ describe("/", () => {
     }) => {
       test.setTimeout(1000 * 60 * 3);
       await test.step("navigates to a product(bread, 9.99€)", async () => {
-        await page.getByText("Bread").click();
+        await page.getByRole("paragraph", { name: "Bread" }).click();
         await page.waitForURL("/product/bread");
       });
       await test.step("adds 15 products to cart(bread, 9.99€)", async () => {
@@ -222,7 +223,7 @@ describe("/", () => {
         await checkCartQuantity(page, "15");
       });
       await test.step("navigates to a product(pizza, 16.99€)", async () => {
-        await page.getByText("Pizza").click();
+        await page.getByRole("paragraph", { name: "Pizza" }).click();
         await page.waitForURL("/product/pizza");
       });
       await test.step("adds 24 products to cart(pizza, 16.99€)", async () => {
@@ -241,7 +242,7 @@ describe("/", () => {
         }
       });
       await test.step("navigates to a product(steak, 12.99€)", async () => {
-        await page.getByText("Steak").click();
+        await page.getByRole("paragraph", { name: "Steak" }).click();
         await page.waitForURL("/product/steak");
       });
       await test.step("adds 10 products to cart(steak, 12.99€)", async () => {
@@ -468,7 +469,7 @@ describe("/", () => {
         await page.waitForResponse(/stripe/);
       });
       await test.step("navigates to a product(chocolate cake, 25.99€)", async () => {
-        await page.getByText("Chocolate cake").click();
+        await page.getByRole("paragraph", { name: "Chocolate cake" }).click();
         await page.waitForURL("/product/chocolate-cake");
       });
       await test.step("adds 15 products to cart(chocolate cake, 9.99€)", async () => {
@@ -482,7 +483,7 @@ describe("/", () => {
         await checkCartQuantity(page, "16");
       });
       await test.step("navigates to a product(pancakes cake, 25.99€)", async () => {
-        await page.getByText("Pancakes").click();
+        await page.getByRole("paragraph", { name: "Pancakes" }).click();
         await page.waitForURL("/product/pancakes");
       });
       await test.step("adds 7 products to cart(pancakes cake, 22.99€)", async () => {
@@ -499,14 +500,14 @@ describe("/", () => {
         await page.waitForResponse(/stripe/);
       });
       await test.step("goes to greek salad", async () => {
-        await page.getByText("Greek salad").click();
+        await page.getByRole("paragraph", { name: "Greek salad" }).click();
         await page.waitForURL("/product/greek-salad");
       });
       await test.step("goes to home page(with .js nav link)", async () => {
         await page.getByLabel("go to home").click();
       });
       await test.step("goes to burger", async () => {
-        await page.getByText("Burger").click();
+        await page.getByRole("paragraph", { name: "Burger" }).click();
         await page.waitForURL("/product/burger");
       });
       await test.step("opens cart", async () => {

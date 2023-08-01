@@ -35,8 +35,12 @@
   },
   "devDependencies": {
     "@playwright/test": "^1.36.2",
+    "@semantic-release/github": "^9.0.4",
     "@types/canvas-confetti": "^1.6.0",
     "@types/stripe": "^8.0.417",
-    "prettier-plugin-tailwindcss": "^0.4.1"
+    "chromium": "^3.0.3",
+    "playwright": "^1.36.2",
+    "prettier-plugin-tailwindcss": "^0.4.1",
+    "semantic-release": "^21.0.7"
   }
 }

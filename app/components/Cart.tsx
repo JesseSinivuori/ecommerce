@@ -47,15 +47,17 @@ export default function Cart() {
   useEffect(() => {
     if (showCart) {
       setCartOpenStyle("");
+      document.body.style.overflow = "hidden"; // Disable scrolling the page
     } else {
       setCartOpenStyle("translate-x-full");
+      document.body.style.overflow = "auto"; // Enable scrolling the page
     }
   }, [showCart]);
 
   return (
     <div
-      className={`cart-wrapper h-[100svh] w-full max-w-[680px] overflow-hidden
-           bg-nav transition-all duration-500
+      className={`h-full w-full max-w-[680px] fixed right-0 top-0 bottom-0 text-white
+           bg-nav transition-all duration-500 overscroll-none 
           ${cartOpenStyle}`}
     >
       <OnPopState onPopState={() => setShowCart(false)}>
@@ -64,14 +66,14 @@ export default function Cart() {
           onClickOutside={() => setShowCart(false)}
         >
           <div
-            className={`py-8 px-4  h-[100svh] flex flex-col rounded-md overflow-auto overscroll-none `}
+            className={`py-8 px-4 h-screen flex flex-col  rounded-md overflow-auto overscroll-none `}
             role="dialog"
             aria-label="shopping cart"
           >
             <button
               aria-label="close cart"
               type="button"
-              className={`cart-heading hidden pb-8 transition-all duration-100
+              className={`cart-heading hidden pb-8 transition-all duration-100 
               hover:opacity-50 ss:flex`}
               onClick={() => {
                 setShowCart(false);
@@ -123,7 +125,7 @@ export default function Cart() {
                   </div>
                 ))}
             </div>
-            <div className="flex w-full flex-col bg-nav xs:max-w-[680px]">
+            <div className="flex w-full flex-col bg-nav xs:max-w-[680px] ">
               {cartItems.length >= 1 && (
                 <>
                   <div className="pt-4">
@@ -159,7 +161,7 @@ export default function Cart() {
               <button
                 aria-label="close cart"
                 type="button"
-                className={`cart-heading flex py-8 transition-all
+                className={`cart-heading py-8 transition-all flex
               duration-100 hover:opacity-50 ss:hidden`}
                 onClick={() => {
                   setShowCart((prev) => !prev);

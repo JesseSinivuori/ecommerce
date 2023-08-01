@@ -56,33 +56,15 @@ html {
   font-weight: 200;
 }
 
-.hero-banner-container button {
-  border-radius: 15px;
-  padding: 10px 10px;
-  color: white;
-  border: none;
-  margin: 40px;
-  font-size: 18px;
-  font-weight: 500;
-  cursor: pointer;
-  position: relative;
-  z-index: 1;
-  border: 1px solid;
-  @apply border-red-900 bg-red-900 transition-all
-  duration-300 hover:border-red-600 hover:bg-transparent hover:text-red-600;
-}
-
 .hero-banner-container h3 {
   font-size: 36px;
 }
 
 .hero-banner-container h1 {
   color: white;
-  font-size: 5em;
   display: flex;
   position: relative;
   z-index: 1;
-  padding: 40px;
   @apply w-full flex-1 flex-row;
 }
 
@@ -94,33 +76,6 @@ html {
   right: 0;
   top: 0;
   bottom: 0;
-}
-
-.hero-banner-gradient {
-  background: rgb(0, 0, 0);
-  background: radial-gradient(
-    circle,
-    rgb(255, 255, 255) 0%,
-    rgb(201, 3, 3) 35%,
-    rgba(0, 0, 0, 1) 100%
-  );
-  z-index: 0;
-  opacity: 0.25;
-  position: absolute;
-  height: 200%;
-  width: 200%;
-}
-
-.hero-banner-text-gradient {
-  background: radial-gradient(
-    circle,
-    rgb(255, 123, 0) 0%,
-    rgb(201, 3, 3) 50%,
-    rgb(255, 0, 0) 100%
-  );
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
 }
 
 .desc {
@@ -163,15 +118,6 @@ html {
 .products-heading p {
   font-size: 16px;
   font-weight: 200;
-}
-
-.cart-wrapper {
-  z-index: 9999;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  color: white;
-  position: absolute;
 }
 
 .cart-heading {
@@ -504,10 +450,6 @@ html {
   .hero-banner-container h3 {
     font-size: 20px;
     @apply bg-emerald-900;
-  }
-
-  .hero-banner-container button {
-    z-index: 1;
   }
 
   .desc {
