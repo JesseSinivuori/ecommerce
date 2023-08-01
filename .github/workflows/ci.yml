@@ -37,15 +37,16 @@ jobs:
       - name: Lint
         run: npm run lint
 
-      - name: Build application
-        run: npm run build
-
       - name: Cache build folder
         uses: actions/cache@v3
         id: cache-next-build
         with:
           path: .next
           key: ${{ runner.os }}-cache-next-build-${{ hashFiles('package-lock.json') }}
+
+      - name: Build application
+        if: steps.cache-next-build.outputs.cache-hit != 'true'
+        run: npm run build
 
       - name: Upload build folder
         uses: actions/upload-artifact@v3
