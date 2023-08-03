@@ -11,7 +11,7 @@ export default function BuyButtons({ product }: { product: ProductProps }) {
   };
 
   return (
-    <div className="ml-0 xss:ml-[-15px] mt-8">
+    <div className="ml-0 xss:ml-[-15px] mt-8 xss:mt-0">
       <div className="flex flex-wrap justify-center xss:justify-start xs:flex-nowrap ">
         <button
           type="button"

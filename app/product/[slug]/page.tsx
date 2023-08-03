@@ -11,6 +11,7 @@ import {
 } from "../../components/index";
 import { getProduct, getProducts } from "@/app/lib/fetch";
 import { Metadata } from "next";
+import styles from "@/app/style";
 
 export default async function ProductDetails({
   params: { slug },
@@ -27,11 +28,11 @@ export default async function ProductDetails({
         <ProductImage image={image} name={name} />
         <div className="product-detail-desc max-w-full flex-wrap xss:max-w-[410px]">
           <div className="flex justify-start">
-            <h3 className="relative mb-4 w-[110px] rounded-md bg-emerald-900 p-1 font-extralight">
+            <h3 className="relative mb-4  rounded-md bg-emerald-900 py-1 px-2 font-extralight">
               Free Delivery
             </h3>
           </div>
-          <h1>{name}</h1>
+          <h1 className="text-3xl">{name}</h1>
           <div className="reviews">
             <div className="stars">
               <AiFillStar />
@@ -40,10 +41,8 @@ export default async function ProductDetails({
               <AiFillStar />
               <AiOutlineStar />
             </div>
-            <p></p>
           </div>
-          <h4></h4>
-          <p>{details}</p>
+          <p className="text-white/75 ">{details}</p>
           <p className="price">{price}€</p>
           <div className="quantity flex-wrap justify-center xss:flex xss:justify-start">
             <div className="justify-start">

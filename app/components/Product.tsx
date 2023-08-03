@@ -29,15 +29,15 @@ export default function Product({ product }: { product: ProductProps }) {
       >
         <Image
           src={urlFor(image && image[0])}
-          alt={`Image of ${name}`}
+          alt=""
           width={300}
           height={300}
           className="rounded-xl object-contain"
         />
-        <p className="product-name w-[200px] min-w-[200px] text-white sm:w-[300px]">
+        <p className="pt-2 w-[200px] min-w-[200px] text-white text-xl sm:w-[300px]">
           {name}
         </p>
-        <p className={`${styles.paragraph} product-price `}>{price}€</p>
+        <p className={`text-white/75 font-extralight text-lg `}>{price}€</p>
       </div>
     </Link>
   );

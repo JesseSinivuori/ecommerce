@@ -30,7 +30,7 @@ export function ProductImage({
       <Image
         src={urlFor(image[index])}
         className="rounded-xl"
-        alt={`Image of '${name}`}
+        alt=""
         height={400}
         width={400}
       />
@@ -46,7 +46,7 @@ export function ProductImage({
               className={
                 i === index ? "small-image selected-image" : "small-image"
               }
-              alt={`Image of '${name}`}
+              alt=""
               onMouseEnter={() => setIndex(i)}
             />
           ))}

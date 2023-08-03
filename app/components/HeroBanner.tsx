@@ -45,11 +45,12 @@ export default function HeroBanner({
             {heroBanner.midText}
           </h2>
         </div>
-        <div className="flex">
+        <div className="flex relative">
+          <div className="bg-gradient-to-r from-primary w-full h-full absolute blur-xl rounded-full"></div>
           <Link
             href={`/product/${heroBanner.product.toLowerCase()}`}
             className="text-lg rounded-md px-4 py-2 z-[1] m-8 border-red-900 bg-red-900 transition-all
-          duration-300 hover:border-red-600 hover:bg-transparent  border"
+          duration-300 hover:border-red-600 hover:bg-transparent border"
           >
             {heroBanner.buttonText}
           </Link>
@@ -57,7 +58,7 @@ export default function HeroBanner({
       </div>
       <Image
         src={urlFor(heroBanner.image)}
-        alt={`image of ${heroBanner.product.toLowerCase()}`}
+        alt=""
         className="hero-banner-image"
         height={850}
         width={850}

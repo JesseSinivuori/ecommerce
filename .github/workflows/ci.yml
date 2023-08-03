@@ -10,51 +10,56 @@ jobs:
   build:
     timeout-minutes: 10
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [18]
+        pnpm-version: [8]
     steps:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Setup Node.js
+      - name: Setup Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
         with:
-          node-version: 18
-          cache: "npm"
+          node-version: ${{ matrix.node-version }}
 
-      - name: Cache NPM dependencies # (2)
-        uses: actions/cache@v3
-        id: cache-npm
+      - name: Setup PNPM ${{ matrix.pnpm-version }}
+        uses: pnpm/action-setup@v2
         with:
-          path: node_modules
-          key: ${{ runner.os }}-cache-npm-${{ hashFiles('package-lock.json') }}
+          version: ${{ matrix.pnpm-version }}
+
+      - name: Cache PNPM dependencies # (2)
+        uses: actions/cache@v3
+        id: pnpm
+        with:
+          path: ~/.pnpm-store
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('pnpm-lock.yaml') }}
 
       - name: Install Dependencies
-        if: steps.cache-npm.outputs.cache-hit != 'true'
-        run: npm ci
+        run: pnpm install
 
       - name: Typecheck
-        run: npm run typecheck
+        run: pnpm run typecheck
 
       - name: Lint
-        run: npm run lint
+        run: pnpm run lint
 
       - name: Cache build folder
         uses: actions/cache@v3
-        id: cache-next-build
+        id: next-build
         with:
           path: .next
-          key: ${{ runner.os }}-cache-next-build-${{ hashFiles('package-lock.json') }}
+          key: ${{ runner.os }}-next-build-${{ hashFiles('pnpm-lock.yaml') }}-${{ hashFiles('**/*.js', '**/*.ts', '**/*.tsx', '**/*.jsx', '**/*.json', '!**/node_modules/**') }}
 
       - name: Build application
-        if: steps.cache-next-build.outputs.cache-hit != 'true'
-        run: npm run build
-
-      - name: Upload build folder
-        uses: actions/upload-artifact@v3
-        with:
-          name: next-build
-          path: .next
+        if: steps.next-build.outputs.cache-hit != 'true'
+        run: pnpm run build
 
   test:
+    strategy:
+      matrix:
+        node-version: [18]
+        pnpm-version: [8]
     needs: build
     name: Playwright Tests
     timeout-minutes: 10
@@ -64,89 +69,51 @@ jobs:
       NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: ${{ secrets.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY }}
       STRIPE_SECRET_KEY: ${{ secrets.STRIPE_SECRET_KEY }}
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          cache: "npm"
+      - name: Checkout
+        uses: actions/checkout@v3
 
-      - name: Cache NPM dependencies # (2)
-        uses: actions/cache@v3
-        id: cache-npm
+      - name: Setup Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
         with:
-          path: node_modules
-          key: ${{ runner.os }}-cache-npm-${{ hashFiles('package-lock.json') }}
+          node-version: ${{ matrix.node-version }}
+
+      - name: Setup PNPM ${{ matrix.pnpm-version }}
+        uses: pnpm/action-setup@v2
+        with:
+          version: ${{ matrix.pnpm-version }}
+
+      - name: Cache PNPM dependencies # (2)
+        uses: actions/cache@v3
+        id: pnpm
+        with:
+          path: ~/.pnpm-store
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('pnpm-lock.yaml') }}
+
+      - name: Install Dependencies
+        run: pnpm install
 
       - name: Cache build folder
         uses: actions/cache@v3
-        id: cache-next-build
+        id: next-build
         with:
           path: .next
-          key: ${{ runner.os }}-cache-next-build-${{ hashFiles('package-lock.json') }}
+          key: ${{ runner.os }}-next-build-${{ hashFiles('pnpm-lock.yaml') }}-${{ hashFiles('**/*.js', '**/*.ts', '**/*.tsx', '**/*.jsx', '**/*.json', '!**/node_modules/**') }}
 
-      - name: Download build folder if not cached
-        if: steps.cache-next-build.outputs.cache-hit != 'true'
-        uses: actions/download-artifact@v3
-        with:
-          name: next-build
-          path: .next
+      - name: Build application
+        if: steps.next-build.outputs.cache-hit != 'true'
+        run: pnpm run build
 
       - name: Cache Playwright browsers
         uses: actions/cache@v3
-        id: cache-playwright-browsers
+        id: playwright-browsers
         with:
           path: ~/.cache/ms-playwright/
-          key: ${{ runner.os }}-cache-playwright-browsers-${{ hashFiles('package-lock.json') }}
+          key: ${{ runner.os }}-playwright-browsers-${{ hashFiles('pnpm-lock.yaml') }}
           restore-keys: |
-            ${{ runner.os }}-cache-playwright-browsers-
+            ${{ runner.os }}-playwright-browsers-
 
       - name: Install Playwright Browsers
-        if: steps.cache-playwright-browsers.outputs.cache-hit != 'true'
-        run: npx playwright install --with-deps chromium
+        run: pnpm playwright install --with-deps chromium
 
       - name: Run Playwright tests
-        run: npx playwright test
-
-      - uses: actions/upload-artifact@v3
-        if: always()
-        with:
-          name: playwright-report
-          path: playwright-report/
-          retention-days: 30
-
-  release:
-    timeout-minutes: 10
-    needs: [build, test]
-    name: Release
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write # to be able to publish a GitHub release
-      issues: write # to be able to comment on released issues
-      pull-requests: write # to be able to comment on released pull requests
-      id-token: write # to enable use of OIDC for npm provenance
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          cache: "npm"
-
-      - name: Cache NPM dependencies # (2)
-        uses: actions/cache@v3
-        id: cache-npm
-        with:
-          path: node_modules
-          key: ${{ runner.os }}-cache-npm-${{ hashFiles('package-lock.json') }}
-
-      - name: Verify the integrity of provenance attestations and registry signatures for installed dependencies
-        run: npm audit signatures
-
-      - name: Release
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: npx semantic-release
+        run: pnpm run test:e2e

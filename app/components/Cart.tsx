@@ -107,7 +107,7 @@ export default function Cart() {
                       <Image
                         src={urlFor(item?.image[0])}
                         className="cart-product-image rounded-xl max-h-[200px] max-w-[200px] w-full h-full"
-                        alt={`Image of ${item.name}`}
+                        alt=""
                         width={200}
                         height={200}
                       />
