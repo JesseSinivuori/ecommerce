@@ -123,7 +123,7 @@ const HomeLogo = () => (
 
 const ContactLink = () => (
   <Link
-    href={"https://portfolio-one-gamma-55.vercel.app/portfolio/contact"}
+    href={"https://portfolio-jessesinivuori.vercel.app/contact"}
     className={`flex cursor-pointer select-none
     rounded-md border-[1px] border-red-600 
     p-2 text-[16px] text-white duration-100 
@@ -171,7 +171,6 @@ const MobileMenu = ({
     <button
       type="button"
       onClick={() => setToggleMobileMenu((prev) => !prev)}
-      data-testid="mobile-menu-button"
       aria-label="toggle mobile menu"
       aria-expanded={toggleMobileMenu ? "true" : "false"}
     >

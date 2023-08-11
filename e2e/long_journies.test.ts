@@ -3,7 +3,6 @@ import {
   addToCartButton,
   cartButton,
   checkCartQuantity,
-  mobileMenuButton,
   shoppingCart,
 } from "./helpers/helpers";
 
